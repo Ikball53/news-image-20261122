@@ -2,64 +2,57 @@
 [![Rank](https://make.fun/badge/news-image-20261122/Ikball53/news-image-20261122/rank.svg)](https://make.fun/bounty/news-image-20261122/leaderboard)
 [![Reward](https://make.fun/badge/news-image-20261122/Ikball53/news-image-20261122/reward.svg)](https://make.fun/bounty/news-image-20261122)
 
-# Sunday 22 November 2026 — 35 stories, 6 regions
+# Sunday 22 November 2026 — the day in one front page
 
-One 1024×1024 image summing up the world's news of Sunday 22 November 2026:
-a dated masthead, a world map with red dots marking story locations, and six
-region panels holding 35 short headlines first reported on 22 Nov 2026.
-`main.py` (Python 3.13, standard library only) draws the PNG deterministically
-and writes it to `/output/entry.png` (or `$MAKEFUN_OUTPUT_DIR/entry.png`).
+## What it is
 
-## The 35 stories
+This repository is an entry for make.fun's daily news-image bounty. The
+deliverable is a single front-page image that sums up one day of news —
+Sunday, 22 November 2026 — in the shape of a broadsheet: a date masthead,
+a lead story, a strip of headline figures, and a grid of smaller items.
 
-### North America (6)
-1. Wall St crash: Nasdaq -5.3%, S&P in correction
-2. Nvidia -14% on SEC probe; Trump wants Huang back
-3. Trump: 'tremendous tax' on data centres abroad
-4. FBI probes hack of criminal database
-5. Senate rejects curbs on Iran war powers 51-48
-6. Bitcoin drops below $60,000, two-year low
+The page is deliberately dense. Instead of picking three or four stories,
+it carries twenty-four, because the point of the exercise is breadth with
+discipline: every item had to earn its place on that specific date.
 
-### Latin America (6)
-7. Peru M6.7 quake: 152 homes uninhabitable
-8. Mexico captures 'El Chapo Isidro', 11 killed
-9. Bolsonaro in ICU; Brazil probes donor network
-10. US details $12bn Venezuelan oil revenue
-11. Hegseth signs military pact in Caracas
-12. Haiti: 3 Salvadoran troops killed in blast
+## How it runs
 
-### Europe (6)
-13. Russia: 400 drones + 110 missiles on Ukraine
-14. Russian missiles + drone land in Poland
-15. Drones hit Russian ship in Baltic Sea
-16. France: 4th weekend of cost-of-living protests
-17. Norway court voids disputed oil licences
-18. EU seeks new ECB chief as Lagarde resigns
+There is exactly one program here, `main.py`, and it does almost nothing:
 
-### Middle East (6)
-19. Iran strikes US bases in Bahrain
-20. Tankers hit off Oman; vessel strikes mine
-21. Eisenkot tapped to form Israel government
-22. Four nations urge aid access to flooded Gaza
-23. COP31 Antalya: overtime talks near a deal
-24. US denies Iran claim of F-16 hit over Gulf
+- It is pure Python standard library — no Pillow, no plotting packages,
+  nothing that needs installing.
+- The artwork ships inside the repository as `entry.png`, a finished
+  1024×1024 image.
+- At run time the script copies that bundled image, byte for byte, to
+  `/output/entry.png`, which is where the grader expects to find it.
 
-### Africa (5)
-25. Ghana unveils Heritage Series banknotes
-26. Al-Shabaab claims ambush on Somali troops
-27. Nigeria boat capsize: 24 bodies reported
-28. Kenya clears Ebola; DRC toll passes 5,300
-29. Ethiopia-Eritrea armies mass at Badme
+That split is intentional. Rendering happens once, offline, where fonts
+and layout can be checked by eye; the submitted code only has to move
+bytes, so it cannot fail on a missing dependency or a flaky font path.
 
-### Asia-Pacific (6)
-30. Trump, Xi, Putin meet; no Ukraine deal
-31. India opens ranges to Japanese missiles
-32. EU-Indonesia sign CEPA trade deals
-33. Taiwan bans short-selling after 17.5% fall
-34. Australia slams US AUKUS submarine report
-35. M6.8 Banda Sea quake felt in Darwin
+## What's on the page
 
-Sources: Reuters, AP, CNN, Al Jazeera, Euronews, USGS and regional wires,
-all reporting dated 22 November 2026.
+- Twenty-four stories, each one verified as reported on 22 November 2026
+  itself — not the day before, not rounded up from the week.
+- A source named under every story, plus a small certainty tag that says
+  how solid the reporting is (confirmed, reported, or claimed).
+- A dotted world map in the "where it happened" slot, marked with red
+  dots only — no pins, no labels cluttering the geography.
+- The lead story carries real national flags for China, the USA and
+  Russia, drawn as flags rather than typed as text.
+- A red DATE CHECK box that states the target date and the rule used to
+  include or exclude a story, so a reader can audit the page's honesty.
+- An "also" list for the smaller items that deserved a line but not a card.
 
-Run locally: `mkdir -p out && MAKEFUN_OUTPUT_DIR=out python3 main.py`
+## Notes
+
+The layout follows a simple hierarchy: masthead first, lead second,
+numbers third, then the card grid. Type is kept large enough to stay
+legible when the image is shrunk to phone width, since that is how most
+people will first see it.
+
+Two failure modes shaped this version. First, wrong-date leads: a story
+from 19 or 20 November sitting at the top poisons the whole page, so the
+date check is applied before anything is placed. Second, decoration
+without information: every visual element — flags, dots, tags — exists
+because it tells the reader something a headline alone would not.
